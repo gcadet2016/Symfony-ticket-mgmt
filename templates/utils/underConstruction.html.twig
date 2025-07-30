@@ -1,0 +1,24 @@
+{# templates/utils/underConstuction.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block title %}Under Construction{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/underConstruction.css') }}"/>
+{% endblock %}
+
+{% block logoimg %}{{ asset('images/logo.jpg') }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <figure class="figImg">
+            <a href="{{ path('app_home') }}">
+                <img src={{ asset('images/chantier.jpg') }} alt="Under construction" class="img">
+            </a>
+            <p>Photo by <a href="/photographer/vexels-94700">Vexels.com</a> on <a href="/">Freeimages.com</a></p>
+        </figure>
+        <h1>En construction</h1>
+    </div>
+{% endblock %}
+
