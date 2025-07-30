@@ -1,0 +1,17 @@
+.container {
+    background: #f0f0f0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 100vw; */
+    /* height: 50vw; */
+}
+.img {
+    box-sizing: border-box;
+    /* width: 100vw; */
+    height: 30vw;
+}
+.figImg {
+    margin: 10px;
+}
