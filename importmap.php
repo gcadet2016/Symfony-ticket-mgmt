@@ -16,4 +16,12 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+        'headerScript' => [
+        'path' => './assets/header.js',
+        'entrypoint' => true,
+    ],
+    'footerScript' => [
+        'path' => './assets/footer.js',
+        'entrypoint' => true,
+    ],
 ];

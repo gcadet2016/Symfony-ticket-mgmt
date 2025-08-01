@@ -2,16 +2,103 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="view-transition" content="same-origin" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('icons/icon.png') }}">
+        <link rel="stylesheet" 
+            href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+        >
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+        {% block stylesheets %}{% endblock %}
 
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            {% block importmap %}{{ importmap(['app', 'headerScript', 'footerScript']) }}{% endblock %}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {#% include "app/header.html.twig" %#}
+        
+        {#------------ page header -----------#}
+        <header>
+            <figure class="logoHeader">
+                <a href="{{ path('app_home') }}">
+                <img src="{% block logoimg %}{% endblock %}" alt="logo" class="logoImg">
+                </a>
+            </figure>
+
+            <div class="userDiv" id="userDivId">
+                <div class="headerRow">
+                    <div id="authusername">
+                        {% if app.user %}
+                            <p>Bienvenu(e), {{ app.user.userName }} !</p>
+                        {% else %}
+                            <p>Bienvenu(e), invité(e) !</p>
+                        {% endif %}
+                    </div>
+                    <i class="fas fa-user user" id="userIcon"></i>
+                </div>
+                <nav class="menuUser">
+                    <ul class="menu hidden menuPopup" id="userMenuId">
+                        {% if app.user %}
+                            <li class="liMenuUser">
+                                <a href="{{ path('under_construction') }}" title="Se déconnecter">
+                                    Déconnexion
+                                </a>
+                            </li>
+                            {#<li class="liMenuUser">
+                                <a href="{{ path('under_construction') }}" title="{{ 'menu.LoginTooltip' |trans }}">
+                                    {{ 'menu.userProfile' |trans }}
+                                </a>
+                            </li>#}
+                        {% else %}
+                            <li class="liMenuUser">
+                                <a href="{{ path('under_construction') }}" title="Se connecter">
+                                    Connexion
+                                </a>
+                            </li>                    
+                        {% endif %}
+                    </ul>
+                </nav>
+                <script type="module">
+                    import { showMenuUser, hideMenuUser } from 'headerScript';
+                    document.getElementById('userDivId').onclick = function() { showMenuUser(); };
+                    document.getElementById("userDivId").onmouseleave = function() { hideMenuUser(); };
+                </script>
+            </div>
+
+            <div class="navDiv" id="navDivId">
+                <!-- Menu déroulant -->
+                <!-- Icône "burger" sur petits écrans-->
+                <i class="fas fa-bars burger" id="burgerIcon"></i>
+                <script type="module">
+                    import { toggleMenu } from 'headerScript';
+                    document.getElementById('burgerIcon').onclick = function() { toggleMenu(); };
+                </script>
+
+                <nav class="navBar">
+                    <ul class="menu hiddensm" id="dropdown-menu">
+                        {#<li class="menuItem"><a href="{{ path('app_sinspirer') }}">{{ 'menu.sinspirer' |trans }}</a></li>
+                        <li class="menuItem"><a href="{{ path('app_resources') }}">Ressources</a></li>
+                        <li class="menuItem"><a href="{{ path('app_contribute') }}">{{ 'menu.contribute' |trans }}</a></li>#}
+                        <li class="menuItem"><a href="{{ path('app_home') }}">Accueil</a></li>
+                        <li class="menuItem"><a href="{{ path('under_construction') }}">Contact</a></li>
+                        {% if app.user and is_granted('ROLE_ADMIN') %}
+                            <li class="menuItem"><a href="{{ path('under_construction') }}">Admin</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main id="mainBlockId">
+            {% block body %}{% endblock %}
+        </main>
+        {% include "app/footer.html.twig" %}
+
     </body>
 </html>

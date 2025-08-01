@@ -1,0 +1,385 @@
+@media screen and (min-height: 830px) {
+    header {
+        display: grid;
+        grid-template-rows: 60px 60px 100px;
+        grid-template-columns: 1fr 1fr 1.2fr;
+    }
+}
+@media screen and (max-height: 830px) {
+    header {
+        display: grid;
+        grid-template-rows: 60px 60px 80px;
+        grid-template-columns: 1fr 1fr 1.2fr;
+    }
+}
+header {
+    justify-content: space-between;
+    margin: 8px;
+}
+.logoHeader {
+    margin: 0;
+    padding: 0;
+    grid-column: 1;
+    grid-row: 1 / -1;
+}
+.langDiv, .userDiv {
+    grid-column: 3;
+    text-align: right;
+    padding: 0 20px;
+    margin: 0;
+}
+.userDiv {
+    grid-row: 1;
+}
+.langDiv {
+    grid-row: 2;
+}
+.headerRow {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.menuLang, .menuUser {
+    display: flex;
+    justify-content: right;
+}
+.menuPopup {
+    text-align: left;
+    list-style-type: none;
+    margin: 0;
+    padding: 5px 15px;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    /* position: absolute;
+    top: 50px;
+    left: 100px; */
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.liMenuLang a, .liMenuUser a {
+    color: black;
+    text-decoration: none;
+}
+.langDiv p, .userDiv p {
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 0 10px;
+}
+.navDiv {
+    grid-column: 2 / -1;
+    grid-row: 3;
+    text-align: right;
+    padding: 0 20px;
+    margin: 0;
+    display: inline-block;
+    vertical-align: bottom; /* Optionnel pour aligner les éléments */
+}
+
+/* ------- Menu disconnect ------- */
+/* Styles pour le menu déroulant */
+.navDiv {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    right: 0;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 5px 0;
+    margin: 0;
+    display: block; /* Visible par défaut */
+    z-index: 1000;
+}
+
+.dropdown-menu li {
+    padding: 5px 20px;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    font-weight: 600;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f4f4f4;
+}
+
+.hidden {
+    display: none;
+}
+/* #dropdown-menu {
+    background-color: bisque;
+    opacity: 1;
+    z-index: 1;
+} */
+/* --------- Animation Logo --------- */
+.logoHeader {
+    margin: 0;
+}
+.logoHeader a img{
+    margin: 0px 0px 0px 10px;
+}
+
+@keyframes animeLogo {
+    0% {
+        width: 60px;
+        height: 60px;
+        background: #f0f0f0;
+        box-shadow: 0 0 0 #cccccc,
+            0 0 0 #ffffff,
+            10px 10px 10px #cccccc inset,
+            -10px -10px 10px #ffffff inset;
+    }
+
+    25% {
+        width: 60px;
+        height: 60px;
+        background: #f8f8f8;
+        box-shadow: 10px 10px 10px #cccccc,
+            10px 10px 10px #ffffff,
+            0 0 0 #cccccc inset,
+            0 0 0 #ffffff inset;
+    }
+
+    50% {
+        width: 60px;
+        height: 140px;
+        background: #f8f8f8;
+        box-shadow: 10px 10px 10px #cccccc,
+            10px 10px 10px #ffffff,
+            0 0 0 #cccccc inset,
+            0 0 0 #ffffff inset;
+    }
+
+    100% {
+        width: auto;
+        height: 100%;
+        background: #fafafa;
+        box-shadow: 20px 20px 20px #cccccc,
+            0 0 0 #ffffff,
+            0 0 0 #cccccc inset,
+            2px 2px 2px #ffffff inset;
+    }
+}
+@keyframes animeLogoSimple {
+    0% {
+        width: 60px;
+        height: 60px;
+        background: #f0f0f0;
+        box-shadow: 0 0 0 #cccccc,
+            0 0 0 #ffffff,
+            10px 10px 10px #cccccc inset,
+            -10px -10px 10px #ffffff inset;
+    }
+
+    25% {
+        width: 60px;
+        height: 60px;
+        background: #f8f8f8;
+        box-shadow: 10px 10px 10px #cccccc,
+            10px 10px 10px #ffffff,
+            0 0 0 #cccccc inset,
+            0 0 0 #ffffff inset;
+    }
+
+    50% {
+        width: 60px;
+        height: 140px;
+        background: #f8f8f8;
+        box-shadow: 10px 10px 10px #cccccc,
+            10px 10px 10px #ffffff,
+            0 0 0 #cccccc inset,
+            0 0 0 #ffffff inset;
+    }
+
+    100% {
+        width: auto;
+        height: 200%;
+        background: #fafafa;
+        box-shadow: 40px 40px 40px #cccccc,
+            0 0 0 #ffffff,
+            0 0 0 #cccccc inset,
+            2px 2px 2px #ffffff inset;
+    }
+}
+/* --------- Animation Menu --------- */
+.menu {
+    list-style: none;
+    /* padding-inline-start: 0; */
+    font-size: 0;
+    font-weight: 0;
+    text-transform: lowercase;
+    letter-spacing: -4px;
+    /* animation: animeMenu 1s linear 0s 1 alternate; */
+    animation: animeMenu 1s linear 0s 1 alternate;
+    animation-fill-mode: forwards;
+}
+@keyframes animeMenu {
+    from {
+        font-size: 0em;
+        font-weight: 0;
+        text-transform: lowercase;
+        letter-spacing: -4px;
+    }
+    to {
+        font-size: 1.2em;
+        font-weight: 600;
+        text-transform: capitalize;
+        letter-spacing: 0px;
+    }
+}
+
+
+.menuItem {
+    display: table-cell;
+    padding: 10px 20px;
+    color: inherit;
+}
+.menuItem > a {
+    text-decoration: none;
+    color: inherit;
+    /* background-color: tomato; */
+    width:200px;
+}
+.active {
+    background-color: greenyellow;
+}
+.navDiv {
+    align-content: center;
+    text-align: right;
+}
+.navDiv a{
+    text-decoration: none;
+
+    /* color: rgb(82, 82, 125); */
+}
+.fas.fa-bars, .fas.fa-user, .fas.fa-globe {
+    font-size: 24px; /* Ajuste la taille de l'icône */
+    cursor: pointer;  
+    /*color: black; /* Couleur de l'icône */
+}
+.fas.fa-bars, .fas.fa-user {
+    margin: 10px;
+}
+.fas.fa-globe {
+    margin: 0 10px 0 0;
+}
+/* --------- Pour les grands écrans --------- */
+@media screen and (min-width: 1000px) {
+    .logoImg {
+        border-radius: 10px;
+        width: 60px;
+        height: 60px;
+        background: #f0f0f0;
+        box-shadow: 0 0 0 #cccccc,
+            0 0 0 #ffffff,
+            10px 10px 10px #cccccc inset,
+            -10px -10px 10px #ffffff inset;
+        animation: animeLogo 2s cubic-bezier(0.16, 1, 0.3, 1) 0s 1 alternate;
+        animation-fill-mode: forwards;
+    }
+    .logoImgSimple {
+        height: 30%;
+    }
+    .burger {
+        --fa-display: none;
+    }
+    .user {
+        font-size: 24px;
+    }
+    .navBar {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
+    .hiddensm {
+        display: inline-block;
+    }
+    .menu.dark-mode > .menuItem{
+        color: white;
+    }
+    .menu.light-mode > .menuItem {
+        color: black;
+    }
+}
+/* --------- Pour les petits écrans --------- */
+@media screen and (max-width: 1000px) {
+    .menu {
+        background-color: white;
+        border-radius: 5px;
+        border: 1px solid grey;
+    }
+    .logoImg {
+        border-radius: 10px;
+        /* width: 50%; */
+        /* height: 60px; */
+        background: #f0f0f0;
+        box-shadow: 20px 20px 20px #cccccc,
+            0 0 0 #ffffff,
+            0 0 0 #cccccc inset,
+            2px 2px 2px #ffffff inset;
+        /* animation: animeLogo 3s cubic-bezier(0.16, 1, 0.3, 1) 1s 1 alternate;
+        animation-fill-mode: forwards; */
+        height: 100%;
+        padding: 5px;
+        /* width: auto; */
+        box-sizing: border-box;
+        object-fit: contain;
+    }
+    .logoImgSimple {
+        height: 50%;
+    }
+    .burger {
+        --fa-display: inline-block;
+        vertical-align: right;
+    }
+    .menuItem {
+        display: block;
+        padding: 10px 10px;
+    }
+    .menu.dark-mode > .menuItem{
+        color: black;
+    }
+    .menu.light-mode > .menuItem {
+        color: black;
+    }
+    .hiddensm {
+        display: none;
+    }
+    .navBar {
+        vertical-align: middle;
+        padding-right: 20px;
+        /* display: flex; */
+        width: 160px;
+        margin-left: auto;
+    }
+}
+@media screen and (max-width: 750px) {
+
+    .logoImg {
+        height: 70%;
+    }
+    .logoImgSimple {
+        height: 50%;
+    }
+}
+@media screen and (max-width: 500px) {
+
+    .logoImg {
+        height: 50%;
+    }
+    .logoImgSimple {
+        height: 30%;
+    }
+    #authusername {
+        display: none;
+    }
+}
