@@ -7,12 +7,10 @@ export function toggleMenu() {
 
 // ----- User Menu -----
 export function showMenuUser() {
-    hideMenuLangBar();
     const menu2 = document.getElementById('userMenuId');
     menu2.classList.remove('hidden');
 }
 export function hideMenuUser() {
-    showMenuLangBar();
     const menu2 = document.getElementById('userMenuId');
     menu2.classList.add('hidden');
 }
