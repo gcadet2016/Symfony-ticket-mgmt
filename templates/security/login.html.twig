@@ -1,0 +1,70 @@
+{# templates/security/login.html.twig #}
+{# Summary: When you submit the form, the security system automatically reads the _username and _password POST parameter, loads the user via the user provider, checks the user's credentials and either authenticates the user or sends them back to the login form where the error can be displayed. #}
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/login.css') }}"/>
+{% endblock %}
+
+{% block logoimg %}{{ asset('images/logo.png') }}{% endblock %}
+
+{% block body %}
+	<div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
+
+		<div class="login">
+            {# The <form> element sends a POST request to the app_login route, since that's what you configured as the check_path under the form_login key in security.yaml; #}
+			<form  action="{{ path('app_login') }}" method="post">
+				<label for="chk" aria-hidden="true">Connexion</label>
+
+                {# The username (or whatever your user's "identifier" is, like an email) field has the name _username and the password field has the name _password. #}
+                <input type="text" id="username" name="_username" placeholder="Email" value="{{ last_username }}" required>
+                <input type="password" id="password" name="_password" placeholder="Mot de passe" required>
+
+				{# https://symfony.com/doc/current/security.html#form_login-csrf #}
+				<input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+				
+				{# Inclure target_path si défini dans la session #}
+				{% if app.request.query.get('target_path') %}
+					<input type="hidden" name="_target_path" value="{{ app.request.query.get('target_path') }}">
+				{% endif %}
+
+				{# Inclure request_uri pour le forwarder lors du POST #}
+				<input type="hidden" name="request_uri" value="{{ app.request.getRequestUri() }}">
+
+
+				<a href="{{ path('app_password_lost') }}" id="pwdlost">Mot de passe oublié</a>
+
+				<button type="submit">Connexion</button>
+				{% for message in app.flashes('success') %}
+					<div class="flash-notice">
+						{{ message }}
+					</div>
+				{% endfor %}
+				{% for message in app.flashes('error') %}
+					<div class="flash-notice">
+						{{ message }}
+					</div>
+				{% endfor %}
+				{% for message in app.flashes('verify_email_error') %}
+					<div class="flash-notice">
+						{{ message }}
+					</div>
+				{% endfor %}
+			</form>
+			{% if error %}
+                <div id="errorMsg">error.messageData</div>
+            {% endif %}
+		</div>
+
+		<div class="signup">
+        	<form action="{{ path('app_register') }}" method="post">
+				<label for="chk" aria-hidden="true">S'enregistrer</label>
+				<input type="text" name="_username" placeholder="Nom" required="">
+				<input type="email" name="_email" placeholder="Email" required="">
+				<input type="password" name="_pswd" placeholder="Mot de passe" required="">
+				<button type="submit" class="btn">S'enregistrer</button>
+			</form>
+
+	</div>
+{% endblock %}

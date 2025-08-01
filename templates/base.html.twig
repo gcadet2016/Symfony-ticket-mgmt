@@ -46,18 +46,13 @@
                     <ul class="menu hidden menuPopup" id="userMenuId">
                         {% if app.user %}
                             <li class="liMenuUser">
-                                <a href="{{ path('under_construction') }}" title="Se déconnecter">
+                                <a href="{{ path('app_logout') }}" title="Se déconnecter">
                                     Déconnexion
                                 </a>
                             </li>
-                            {#<li class="liMenuUser">
-                                <a href="{{ path('under_construction') }}" title="{{ 'menu.LoginTooltip' |trans }}">
-                                    {{ 'menu.userProfile' |trans }}
-                                </a>
-                            </li>#}
                         {% else %}
                             <li class="liMenuUser">
-                                <a href="{{ path('under_construction') }}" title="Se connecter">
+                                <a href="{{ path('app_login') }}" title="Se connecter">
                                     Connexion
                                 </a>
                             </li>                    
@@ -88,7 +83,7 @@
                         <li class="menuItem"><a href="{{ path('app_home') }}">Accueil</a></li>
                         <li class="menuItem"><a href="{{ path('under_construction') }}">Contact</a></li>
                         {% if app.user and is_granted('ROLE_ADMIN') %}
-                            <li class="menuItem"><a href="{{ path('under_construction') }}">Admin</a></li>
+                            <li class="menuItem"><a href="{{ path('userAdmin_list') }}">Admin</a></li>
                         {% endif %}
                     </ul>
                 </nav>

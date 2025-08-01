@@ -1,0 +1,56 @@
+{# filepath: /app/templates/utils/usersList.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/usersList.css') }}"/>
+{% endblock %}
+
+{% block logoimg %}{{ asset('images/logo.png') }}{% endblock %}
+
+{% block body %}
+    <h1 id="titre">List des utilisateurs</h1>
+
+    <div class="container">
+        {% if users is not empty %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Nom</th>
+                        <th>Rôles</th>
+                        <th>Vérifié</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('userAdmin_edit', {id: user.id}) }}">{{ user.email }}</a>
+                            </td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.userName }}</td>
+                            <td>{{ user.roles|join(', ') }}</td>
+                            <td>{{ user.isVerified ? 'Oui' : 'Non' }}</td>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucun utilisateur trouvé</p>
+        {% endif %}
+    </div>
+    <p class="bottomButton">
+        <button class="button-22" role="button">
+            <a href="{{ path('app_home') }}">Retour Accueil</a>
+        </button>    
+    </p>
+{#    <p class="bottomButton">
+        <button class="button-22" role="button">
+            <a href="{{ path('appAdmin_pageViews') }}">Nombre de vues</a>
+        </button>    
+    </p>
+#}
+{% endblock %}
