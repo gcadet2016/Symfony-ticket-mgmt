@@ -1,0 +1,77 @@
+{# templates/app/header.html.twig 
+
+gcadet: Not used anymore
+
+#}
+
+{#% block header %#}
+
+    <header>
+        <figure class="logoHeader">
+            <a href="{{ path('app_home') }}">
+                <img src="{{ asset('images/logo.png') }}" alt="logo" class="logoImg">
+            </a>
+        </figure>
+
+        <div class="userDiv" id="userDivId">
+            <div class="headerRow">
+                <div id="authusername">
+                    {% if app.user %}
+                        <p>{{ 'menu.welcome' |trans }}, {{ app.user.userName }} !</p>
+                    {% else %}
+                        <p>{{ 'menu.welcome' |trans }}, invité !</p>
+                    {% endif %}
+                </div>
+                <i class="fas fa-user user" id="userIcon"></i>
+            </div>
+            <nav class="menuUser">
+                <ul class="menu hidden menuPopup" id="userMenuId">
+                    {% if app.user %}
+                        <li class="liMenuUser">
+                            <a href="{{ path('app_logout') }}" title="{{ 'menu.LoginTooltip' |trans }}">
+                                {{ 'menu.disconnect' |trans }}
+                            </a>
+                        </li>
+                        <li class="liMenuUser">
+                            <a href="{{ path('app_login') }}" title="{{ 'menu.LoginTooltip' |trans }}">
+                                {{ 'menu.userProfile' |trans }}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="liMenuUser">
+                            <a href="{{ path('app_login') }}" title="{{ 'menu.LoginTooltip' |trans }}">
+                                {{ 'menu.connect' |trans }}
+                            </a>
+                        </li>                    
+                    {% endif %}
+                </ul>
+            </nav>
+            <script type="module">
+                import { showMenuUser, hideMenuUser } from 'headerScript';
+                document.getElementById('userDivId').onclick = function() { showMenuUser(); };
+                document.getElementById("userDivId").onmouseleave = function() { hideMenuUser(); };
+            </script>
+        </div>
+
+        <div class="navDiv" id="navDivId">
+            <!-- Menu déroulant -->
+            <!-- Icône "burger" sur petits écrans-->
+            <i class="fas fa-bars burger" id="burgerIcon"></i>
+            <script type="module">
+                import { toggleMenu } from 'headerScript';
+                document.getElementById('burgerIcon').onclick = function() { toggleMenu(); };
+            </script>
+
+            <nav class="navBar">
+                <ul class="menu hiddensm" id="dropdown-menu">
+                    <li class="menuItem"><a href="{{ path('under_construction') }}">Ticket</a></li>
+                    <li class="menuItem"><a href="{{ path('under_construction') }}">Documentations</a></li>
+                    <li class="menuItem"><a href="{{ path('under_construction') }}">Contact</a></li>
+                    {% if app.user and is_granted('ROLE_ADMIN') %}
+                        <li class="menuItem"><a href="{{ path('userAdmin_list') }}">Admin</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+{#% endblock %#}

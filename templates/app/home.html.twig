@@ -1,13 +1,46 @@
-{# templates/utils/pageTemplate.html.twig #}
+{# templates/app/home.html.twig #}
 
 {% extends "base.html.twig" %}
 
+{% block title %}Ticket service{% endblock %}
+
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('styles/template.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/home.css') }}"/>
 {% endblock %}
 
-{% block logoimg %}{{ asset('images/logo.jpg') }}{% endblock %}
+{% block logoimg %}{{ asset('images/logo.png') }}{% endblock %}
 
 {% block body %}
-    <h1>Page d'accueil V2</h1>
+    <h1 id="titre">
+        Services de support
+    <h1>
+    <h2 class="titreCenter">
+        Gestion des tickets de support
+    </h2>
+    <section>
+        <article class="w_left">
+            <p>
+                Portail de création et suivi des tickets de supports. 
+            </p>
+        </article>
+        <article class="w_right">
+            <h2>
+                {{ 'homepage.objectifs'|trans|raw }}
+            </h2>
+            <p>
+                Ouvrez un ticket de support etc...
+            </p>
+            <br>
+            <p>
+                En cas d'urgence ou situation critique composez le 07 56 67 54 65
+                <ul id="ulist">
+                    <li>Expliquer le problème rencontré</li>
+                    <li>Préciser la criticité du problème</li>
+                    <li>Fréquence du défau ou de défaillance</li>
+                    <li>Avez-vous une solution temporaire de secours?</li> 
+                </ul>
+                Nos services traiteront votre demande dans les plus bref délais.
+            </p>
+        </article>
+    </section>
 {% endblock %}

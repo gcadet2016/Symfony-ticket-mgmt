@@ -1,0 +1,176 @@
+#footerHeader {
+    grid-row: 2 / span 1;
+    color: #fff;
+
+    h1 {
+        font-family: "Merriweather", serif;
+        margin: 0.4rem 0;
+        font-size: 2.5rem;
+    }
+
+    p {
+        margin: 0;
+    }
+}
+
+#toaster {
+    background-color: #2d519f;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+    padding: 0;
+    transition: height 0.5s cubic-bezier(0.35, 0.1, 0.25, 1);
+
+    &.is_open {
+        height: 220px;
+    }
+
+    h1 {
+        font-size: 1.1rem;
+        margin: 0.1rem 0;
+        font-family: "Lato", arial, sans-serif;
+    }
+
+    .wrapper {
+        display: grid;
+        grid-template-rows: 60px 1fr 1fr;
+        grid-template-columns: 1.5fr 1fr 1fr;
+        height: 100%;
+        position: relative;
+    }
+
+    #footerHeader {
+        grid-row: 1;
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .fLinks {
+        grid-row: 2 / -1;
+        grid-column: 1;
+    }
+
+    .white-disc {
+        grid-row: 2 / -1;
+        grid-column: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border-radius: 50%;
+        /* transforme le carré en cercle */
+        /* Optionnel : ajoutez une ombre pour l'effet */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .white-disc img {
+        box-sizing: border-box;
+        object-fit: contain;
+        height: 60%;
+        /* ajuste la taille de l'image par rapport au disque */
+        width: auto;
+        animation: swing 1s linear infinite;
+    }
+
+    .social-icons {
+        grid-row: 2 / -1;
+        grid-column: 3;
+    }
+
+    @media screen and (max-width: 650px) {
+        .wrapper {
+            display: grid;
+            grid-template-rows: 60px 1fr 1fr;
+            grid-template-columns: 2fr 1fr;
+            height: 100%;
+            position: relative;
+        }
+
+        .fLinks {
+            grid-row: 2 / -1;
+            grid-column: 1 / 2;
+        }
+
+        .white-disc {
+            display: none;
+        }
+
+    } 
+}
+
+@keyframes swing {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(15deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(-15deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+#footerHeader {
+    padding-left: 20px;
+}
+
+.fLinks p {
+    padding: 5px 5px 5px 30px;
+    font-size: large;
+}
+
+.fLink a{
+    color: white;
+    text-decoration: none;
+}
+
+.fLink:link,
+.fLink:visited,
+.fLink:hover,
+.fLink:focus,
+.fLink:active {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.social-icons {
+    text-align: right;
+    padding-right: 40px;
+    font-size: 30px;
+}
+.social-icons a {
+    color: whitesmoke;
+    text-decoration: none;
+}
+.social-icons a:hover {
+    color: white;
+}
+
+.sicon {
+    padding-right: 10px;
+}
+
+#expand_icon {
+    fill: #fff;
+    width: 30px;
+    height: auto;
+    transition: transform 0.5s cubic-bezier(0.35, 0.1, 0.25, 1);
+
+    &.is_reversed {
+        transform: rotate(180deg);
+    }
+}
