@@ -18,6 +18,13 @@ class CreateTicketType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $isAdmin = $options['is_admin'] ?? false;
+        if($isAdmin) {
+            $isEditor = true; // Admins are considered as editors
+        } else {
+            $isEditor = $options['is_editor'] ?? false;
+        }
+
         $builder
             ->add('email', EmailType::class, [
                 'label' => 'Email',
@@ -52,6 +59,7 @@ class CreateTicketType extends AbstractType
                 'attr' => [
                     'class' => 'input-control',
                     'placeholder' => 'Sélectionnez la date de création',
+                    'readonly' => true,
                 ],
                 'constraints' => [
                     new \Symfony\Component\Validator\Constraints\NotBlank([
@@ -69,6 +77,7 @@ class CreateTicketType extends AbstractType
                 'attr' => [
                     'class' => 'input-control',
                     'placeholder' => 'Sélectionnez la date de clôture (optionnelle)',
+                    'readonly' => true,
                 ],
             ])
             ->add('description', TextareaType::class, [
@@ -109,7 +118,45 @@ class CreateTicketType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('status', EntityType::class, [
+            // ->add('status', EntityType::class, [
+            //     'class' => Status::class,
+            //     'choice_label' => 'name', // Remplacez 'name' par le champ à afficher
+            //     'label' => 'Statut',
+            //     'required' => true,
+            //     'placeholder' => 'Sélectionnez un statut',
+            //     'label_attr' => [
+            //         'class' => 'input-label', // Ajoutez ici vos classes CSS pour le label
+            //     ],
+            //     'attr' => [
+            //         'disabled' => true,
+            //     ],
+            //     // 'constraints' => [
+            //     //     new \Symfony\Component\Validator\Constraints\NotBlank([
+            //     //         'message' => 'Le statut ne peut pas être vide.',
+            //     //     ]),
+            //     // ],
+            // ])
+            ->add('owner', TextType::class, [
+                'label' => 'Assigné à',
+                'required' => false,
+                'label_attr' => [
+                    'class' => 'input-label', // Ajoutez ici vos classes CSS pour le label
+                ],
+                'attr' => [
+                    'placeholder' => 'Pris en charge par',
+                    'class' => 'input-control',
+                    'readonly' => true,
+                ],
+                'constraints' => [
+                    new \Symfony\Component\Validator\Constraints\Length([
+                        'max' => 64,
+                        'maxMessage' => 'Le nom de l\'assigné ne peut pas dépasser {{ limit }} caractères.',
+                    ]),
+                ],
+            ]);
+        ;
+        if($isEditor) {
+            $builder->add('status', EntityType::class, [
                 'class' => Status::class,
                 'choice_label' => 'name', // Remplacez 'name' par le champ à afficher
                 'label' => 'Statut',
@@ -123,25 +170,22 @@ class CreateTicketType extends AbstractType
                         'message' => 'Le statut ne peut pas être vide.',
                     ]),
                 ],
-            ])
-            ->add('owner', TextType::class, [
-                'label' => 'Assigné à',
-                'required' => false,
+            ]);
+        } else {
+            $builder->add('status', EntityType::class, [
+                'class' => Status::class,
+                'choice_label' => 'name', // Remplacez 'name' par le champ à afficher
+                'label' => 'Statut',
+                'required' => true,
+                'placeholder' => 'Sélectionnez un statut',
                 'label_attr' => [
                     'class' => 'input-label', // Ajoutez ici vos classes CSS pour le label
                 ],
                 'attr' => [
-                    'placeholder' => 'Pris en charge par',
-                    'class' => 'input-control',
-                ],
-                'constraints' => [
-                    new \Symfony\Component\Validator\Constraints\Length([
-                        'max' => 64,
-                        'maxMessage' => 'Le nom de l\'assigné ne peut pas dépasser {{ limit }} caractères.',
-                    ]),
+                    'disabled' => true, // Disable the field for non-editors
                 ],
             ]);
-        ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -41,15 +41,15 @@ security:
         - { path: ^/app_password_reset, roles: PUBLIC_ACCESS }
         - { path: ^/app_register, roles: PUBLIC_ACCESS }
         # allow authenticated users to access the following urls
-        - { path: ^/app_tickets_list, roles: ROLE_EDITOR }
+        - { path: ^/app_tickets_list, roles: ROLE_USER }
         - { path: ^/app_ticket_create, roles: ROLE_EDITOR }
         - { path: ^/app_ticket_edit, roles: ROLE_EDITOR }
-        # - { path: ^/profile, roles: ROLE_USER }
+
     role_hierarchy:
-        ROLE_EDITOR: [ROLE_USER]
+        ROLE_USER: []               # Default user role
+        ROLE_EDITOR: [ROLE_USER]    # Agency employees
         ROLE_ADMIN: [ROLE_EDITOR]
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
-        ROLE_CUSTOM: [ROLE_USER] # Ton rôle personnalisé
+
 
 when@test:
     security:

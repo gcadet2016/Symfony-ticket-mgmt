@@ -13,14 +13,14 @@
 {% block body %}
     <div class="ticket_main_container">
         <h1>Modification du ticket</h1>
-        <div class="ticket_main">
+        {# <div class="ticket_main"> #}
             {{ include('app/_editTicket_form.html.twig', {
                 form: form,
                 button_label: 'Enregistrer le ticket',
                 include_back_to_home_link: true,
             }, with_context = false) }}
-        </div>
-        <aside id="sidebar">
+        {#</div>#}
+        <aside id="sidebar"> 
             <div class="section">
                 <a href="{{ path('app_tickets_list', {id: ticket.id}) }}" class="btn btn-lg btn-block btn-success">
                     <twig:ux:icon name="tabler:eye"/> Retour liste des tickets

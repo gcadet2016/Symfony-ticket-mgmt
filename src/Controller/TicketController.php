@@ -44,11 +44,17 @@ final class TicketController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        $userEmail = $this->getUser()->getEmail();
+        // Retrieve the tickets from the database
+        // If the user has the ROLE_EDITOR, they can see all tickets.
+        // Otherwise, they can only see their own tickets based on their email.
+        if ($this->isGranted('ROLE_EDITOR')) {
+            $tickets = $entityManager->getRepository(Ticket::class)->findAll();
+        } else {
+            $userEmail = $this->getUser()->getEmail();
 
-        $tickets = $entityManager->getRepository(Ticket::class)
-            ->findBy(['email' => $userEmail]);
-
+            $tickets = $entityManager->getRepository(Ticket::class)
+                ->findBy(['email' => $userEmail]);
+        }
         return $this->render('app/listTickets.html.twig', [
             'tickets' => $tickets,
         ]);
@@ -77,10 +83,20 @@ final class TicketController extends AbstractController
         $categoryRepo = $entityManager->getRepository(Category::class);
         $categoryIncident = $categoryRepo->findOneBy(['name' => 'Incident']);
         $ticket->setCategory($categoryIncident); // Set default category to 'Incident'
-        $form = $this->createForm(CreateTicketType::class, $ticket);
+
+        $form = $this->createForm(CreateTicketType::class, $ticket); //, [
+            // 'is_admin' => $this->isGranted('ROLE_ADMIN'),
+            // 'is_editor' => $this->isGranted('ROLE_EDITOR'),
+        // ]);
 
         $form->handleRequest($request);
 
+        if($ticket->getStatus() === null) {
+            // The status is null because user cannot set it (disabled in form), set it to 'Nouveau' (New)
+            $this->logger->debug('Status is null, setting default status to Nouveau');
+            $statusNouveau = $statusRepo->findOneBy(['name' => 'Nouveau']);
+            $ticket->setStatus($statusNouveau);
+        }
         $this->logger->debug('Données reçues du formulaire', [
             'Creation' => $ticket->getCreationDate(),
             'email' => $ticket->getEmail(),

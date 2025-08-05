@@ -19,6 +19,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Email</th>
                         <th>Création</th>
                         <th>Description</th>
                         <th>Category</th>
@@ -32,6 +33,7 @@
                             <td>
                                 <a href="{{ path('app_ticket_edit', {id: ticket.id}) }}">{{ ticket.id }}</a>
                             </td>
+                            <td>{{ ticket.getEmail }}</td>
                             <td>{{ ticket.getCreationDate|date('d/m/Y H:i') }}</td>
                             <td>{{ ticket.getDescription }}</td>
                             <td>{{ ticket.Category.getName() }}</td>
