@@ -34,8 +34,22 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # Autoriser l'accès public aux URLs suivantes
+        - { path: ^/app_home, roles: PUBLIC_ACCESS }
+        - { path: ^/app_login, roles: PUBLIC_ACCESS }
+        - { path: ^/app_password_lost, roles: PUBLIC_ACCESS }
+        - { path: ^/app_password_reset, roles: PUBLIC_ACCESS }
+        - { path: ^/app_register, roles: PUBLIC_ACCESS }
+        # allow authenticated users to access the following urls
+        - { path: ^/app_tickets_list, roles: ROLE_EDITOR }
+        - { path: ^/app_ticket_create, roles: ROLE_EDITOR }
+        - { path: ^/app_ticket_edit, roles: ROLE_EDITOR }
         # - { path: ^/profile, roles: ROLE_USER }
+    role_hierarchy:
+        ROLE_EDITOR: [ROLE_USER]
+        ROLE_ADMIN: [ROLE_EDITOR]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+        ROLE_CUSTOM: [ROLE_USER] # Ton rôle personnalisé
 
 when@test:
     security:

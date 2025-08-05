@@ -11,19 +11,19 @@ class Status
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $status_id = null;
 
     #[ORM\Column(length: 32)]
     private ?string $name = null;
 
-    public function getId(): ?int
+    public function getStatusId(): ?int
     {
-        return $this->id;
+        return $this->status_id;
     }
 
-    public function setId(int $id): static
+    public function setStatusId(int $status_id): static
     {
-        $this->id = $id;
+        $this->status_id = $status_id;
 
         return $this;
     }

@@ -32,11 +32,8 @@ class LoginController extends AbstractController
     #[Route('/login', name: 'app_login')]
     public function login(
         AuthenticationUtils $authenticationUtils, 
-        Request $request, 
-        EntityManagerInterface $entityManager
-    ): Response
+        Request $request   ): Response
     {
-        $this->incPageviews($entityManager, 'security/authent.html');
         $requestUri = $request->request->get('target_path');
         if ($requestUri) {
             $this->logger->debug('target_path forwarded: ' . $requestUri);
@@ -50,7 +47,7 @@ class LoginController extends AbstractController
 
         // Note: authentication custom actions are implemented in listeners:
         // CheckVerifiedUserListener.php
-        return $this->render('security/authent.html.twig', [
+        return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
@@ -112,18 +109,4 @@ class LoginController extends AbstractController
         return $this->render('security/password_reset.html.twig', ['token' => $token]);
     }
 
-    // Increment page view count for the given page name
-    public function incPageviews(EntityManagerInterface $em, string $pageName)
-    {
-        $pageView = $em->getRepository(PageView::class)->findOneBy(['page' => $pageName]);
-        if (!$pageView) {
-            $pageView = new PageView();
-            $pageView->setPage($pageName);
-            $pageView->setViews(1);
-            $em->persist($pageView);
-        } else {
-            $pageView->increment();
-        }
-        $em->flush();
-    }
 }

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\TicketRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Category;
+use App\Entity\Status;
 
 #[ORM\Entity(repositoryClass: TicketRepository::class)]
 class Ticket
@@ -25,11 +27,13 @@ class Ticket
     #[ORM\Column(length: 512)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 32)]
-    private ?string $category = null;
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\JoinColumn(name: "category_fk", referencedColumnName: "category_id", nullable: false)]
+    private ?Category $category = null;
 
-    #[ORM\Column(length: 32)]
-    private ?string $status = null;
+    #[ORM\ManyToOne(targetEntity: Status::class)]
+    #[ORM\JoinColumn(name: "status_fk", referencedColumnName: "status_id", nullable: false)]
+    private ?Status $status = null;
 
     #[ORM\Column(length: 64, nullable: true)]
     private ?string $owner = null;
@@ -87,24 +91,24 @@ class Ticket
         return $this;
     }
 
-    public function getCategory(): ?string
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(string $category): static
+    public function setCategory(?Category $category): static
     {
         $this->category = $category;
 
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?Status
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(?Status $status): static
     {
         $this->status = $status;
 

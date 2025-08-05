@@ -11,19 +11,19 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $category_id = null;
 
     #[ORM\Column(length: 32)]
     private ?string $name = null;
 
-    public function getId(): ?int
+    public function getCategoryId(): ?int
     {
-        return $this->id;
+        return $this->category_id;
     }
 
-    public function setId(int $id): static
+    public function setCategoryId(int $category_id): static
     {
-        $this->id = $id;
+        $this->category_id = $category_id;
 
         return $this;
     }
@@ -39,4 +39,5 @@ class Category
 
         return $this;
     }
+
 }
