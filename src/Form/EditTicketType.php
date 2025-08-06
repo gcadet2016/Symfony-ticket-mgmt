@@ -13,13 +13,40 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Psr\Log\LoggerInterface;
 
 class EditTicketType extends AbstractType
 {
+    public function __construct(
+    private LoggerInterface $logger, // Injection du logger
+    )
+    {
+        // Le logger est injecté via le constructeur
+        // Il peut être utilisé pour enregistrer des messages de log
+        $this->logger->debug('EditTicketType initialized');
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('email', EmailType::class, [
+        // Depending on the uer role, we will enable or disable certain fields.
+        // For example, if the user is an admin, they can set the owner and status
+        $isAdmin = $options['is_admin'] ?? false;
+        $isUser = $options['is_user'] ?? false; // Assuming 'is_user' is passed for regular users
+        $isEditor = $options['is_editor'] ?? false;
+        // Special Role inheritance
+        if($isAdmin) {
+            $isEditor = true; // Admins are considered as editors
+            $this->logger->debug('EditTicketType: Admin user detected');
+        }
+        if($isEditor) {
+            $isUser = false; // Editors have limited permissions compared to users who are owners of tickets
+            $this->logger->debug('EditTicketType: Editor user detected');
+        }
+        if($isUser) {
+            $this->logger->debug('EditTicketType: Regular user detected');
+        }
+        // Email: Admin and Users can edit, Editors can only view
+        if($isAdmin || $isUser) {
+            $builder->add('email', EmailType::class, [
                 'label' => 'Email',
                 'required' => true,
                 'label_attr' => [
@@ -41,8 +68,39 @@ class EditTicketType extends AbstractType
                         'maxMessage' => 'L\'email ne peut pas dépasser {{ limit }} caractères.',
                     ]),
                 ],
-            ])
-            ->add('creationDate', DateTimeType::class, [
+            ]);
+        } else {
+            $builder->add('email', EmailType::class, [
+                'label' => 'Email',
+                'required' => true,
+                'label_attr' => [
+                    'class' => 'input-label', // Ajoutez ici vos classes CSS pour le label
+                ],
+                'attr' => [
+                    'placeholder' => 'Saisir votre email',
+                    'class' => 'input-control',
+                    'readonly' => true, // Disable the field for editors
+                ],
+            ]);
+        }
+        
+        // Creation date: Admin can edit, Editors and Users can only view
+        if(!$isAdmin) {
+            $builder->add('creationDate', DateTimeType::class, [
+                'widget' => 'single_text',
+                'label' => 'Date de création',
+                'required' => true,
+                'label_attr' => [
+                    'class' => 'input-label', // Ajoutez ici vos classes CSS pour le label
+                ],
+                'attr' => [
+                    'class' => 'input-control',
+                    'placeholder' => 'Sélectionnez la date de création',
+                    'readonly' => true,
+                ],
+            ]);
+        } else {
+            $builder->add('creationDate', DateTimeType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date de création',
                 'required' => true,
@@ -58,8 +116,26 @@ class EditTicketType extends AbstractType
                         'message' => 'La date de création ne peut pas être vide.',
                     ]),
                 ],
-            ])
-            ->add('closeDate', DateTimeType::class, [
+            ]);
+        }
+
+        // Close date: Admin can edit, Editors and Users can only view
+        if(!$isAdmin) {
+            $builder->add('closeDate', DateTimeType::class, [
+                'widget' => 'single_text',
+                'label' => 'Date de clôture',
+                'required' => false,
+                'label_attr' => [
+                    'class' => 'input-label', // Ajoutez ici vos classes CSS pour le label
+                ],
+                'attr' => [
+                    'class' => 'input-control',
+                    'placeholder' => 'Sélectionnez la date de clôture (optionnelle)',
+                    'readonly' => true,
+                ],
+            ]);
+        } else {
+            $builder->add('closeDate', DateTimeType::class, [
                 'widget' => 'single_text',
                 'label' => 'Date de clôture',
                 'required' => false,
@@ -70,8 +146,12 @@ class EditTicketType extends AbstractType
                     'class' => 'input-control',
                     'placeholder' => 'Sélectionnez la date de clôture (optionnelle)',
                 ],
-            ])
-            ->add('description', TextareaType::class, [
+            ]);
+        }
+
+        // Description: Admin and Users can edit, Editors can only view
+        if($isAdmin || $isUser) {
+            $builder->add('description', TextareaType::class, [
                 'label' => 'Description',
                 'required' => true,
                 'label_attr' => [
@@ -93,8 +173,28 @@ class EditTicketType extends AbstractType
                         'maxMessage' => 'La description ne peut pas dépasser {{ limit }} caractères.',
                     ]),
                 ],
-            ])
-            ->add('category', EntityType::class, [
+            ]);
+        } else {
+            $builder->add('description', TextareaType::class, [
+                'label' => 'Description',
+                'required' => true,
+                'label_attr' => [
+                    'class' => 'input-label', // Ajoutez ici vos classes CSS pour le label
+                ],
+                'attr' => [
+                    'rows' => 5,
+                    'cols' => 50,
+                    'maxlength' => 512,
+                    'class' => 'input-control',
+                    'placeholder' => 'Enter ticket description here...',
+                    'readonly' => true, // Disable the field for editors
+                ],
+            ]);
+        }
+
+        // Category: Admin and Users can edit, Editor can only view
+        if($isAdmin || $isUser) {
+            $builder->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'name', // Remplacez 'name' par le champ à afficher
                 'label' => 'Categorie',
@@ -108,8 +208,26 @@ class EditTicketType extends AbstractType
                         'message' => 'La catégorie ne peut pas être vide.',
                     ]),
                 ],
-            ])
-            ->add('status', EntityType::class, [
+            ]);
+        } else {
+            $builder->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name', // Remplacez 'name' par le champ à afficher
+                'label' => 'Categorie',
+                'required' => true,
+                'placeholder' => 'Sélectionnez une catégorie',
+                'label_attr' => [
+                    'class' => 'input-label', // Ajoutez ici vos classes CSS pour le label
+                ],
+                'attr' => [
+                    'disabled' => true, // Disable the field for non-admin
+                ],
+            ]);
+        }
+        
+        // Status: Editors and Admin are allowed to set the status
+        if($isEditor || $isAdmin) {
+            $builder->add('status', EntityType::class, [
                 'class' => Status::class,
                 'choice_label' => 'name', // Remplacez 'name' par le champ à afficher
                 'label' => 'Statut',
@@ -123,8 +241,25 @@ class EditTicketType extends AbstractType
                         'message' => 'Le statut ne peut pas être vide.',
                     ]),
                 ],
-            ])
-            ->add('owner', TextType::class, [
+            ]);
+        } else {
+            $builder->add('status', EntityType::class, [
+                'class' => Status::class,
+                'choice_label' => 'name', // Remplacez 'name' par le champ à afficher
+                'label' => 'Statut',
+                'required' => true,
+                'placeholder' => 'Sélectionnez un statut',
+                'label_attr' => [
+                    'class' => 'input-label', // Ajoutez ici vos classes CSS pour le label
+                ],
+                'attr' => [
+                    'disabled' => true, // Disable the field for non-editors
+                ],
+            ]);
+        }           
+        // Owner: Admin are allowed to set the owner
+        if($isAdmin) {
+            $builder->add('owner', TextType::class, [
                 'label' => 'Assigné à',
                 'required' => false,
                 'label_attr' => [
@@ -141,13 +276,30 @@ class EditTicketType extends AbstractType
                     ]),
                 ],
             ]);
-        ;
+        } else {
+            $builder->add('owner', TextType::class, [
+                'label' => 'Assigné à',
+                'required' => false,
+                'label_attr' => [
+                    'class' => 'input-label', // Ajoutez ici vos classes CSS pour le label
+                ],
+                'attr' => [
+                    'placeholder' => 'Pris en charge par',
+                    'class' => 'input-control',
+                    'readonly' => true,
+                ],
+            ]);
+        }
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Ticket::class,
+            'is_admin' => false,
+            'is_editor' => false,
+            'is_user' => false, 
         ]);
     }
 }

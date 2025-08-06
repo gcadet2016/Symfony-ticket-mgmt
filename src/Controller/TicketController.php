@@ -161,7 +161,11 @@ final class TicketController extends AbstractController
         $originalCategory = $ticket->getCategory();
         $originalStatus = $ticket->getStatus();
 
-        $form = $this->createForm(EditTicketType::class, $ticket);
+        $form = $this->createForm(EditTicketType::class, $ticket, [
+            'is_admin' => $this->isGranted('ROLE_ADMIN'),
+            'is_editor' => $this->isGranted('ROLE_EDITOR'),
+            'is_user' => $this->isGranted('ROLE_USER'),
+        ]);
         $form->handleRequest($request);
 
         // Status and Category are not editable by Users and Editors. Thus they are set to null in the form response.
