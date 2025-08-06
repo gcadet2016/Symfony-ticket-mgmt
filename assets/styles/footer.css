@@ -127,6 +127,18 @@
 #footerHeader {
     padding-left: 20px;
 }
+#footerHeader.hide-on-scroll {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #2d519f;
+    transition: transform 0.3s ease-in-out;
+}
+/* #footerHeader.hide-on-scroll {
+    display: none;
+} */
 
 .fLinks p {
     padding: 5px 5px 5px 30px;

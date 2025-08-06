@@ -84,10 +84,11 @@ final class TicketController extends AbstractController
         $categoryIncident = $categoryRepo->findOneBy(['name' => 'Incident']);
         $ticket->setCategory($categoryIncident); // Set default category to 'Incident'
 
-        $form = $this->createForm(CreateTicketType::class, $ticket); //, [
-            // 'is_admin' => $this->isGranted('ROLE_ADMIN'),
-            // 'is_editor' => $this->isGranted('ROLE_EDITOR'),
-        // ]);
+        $form = $this->createForm(CreateTicketType::class, $ticket, [
+            'is_admin' => $this->isGranted('ROLE_ADMIN'),
+            'is_editor' => $this->isGranted('ROLE_EDITOR'),
+            'is_user' => $this->isGranted('ROLE_USER'),
+        ]);
 
         $form->handleRequest($request);
 
@@ -150,9 +151,28 @@ final class TicketController extends AbstractController
         Request $request, 
         EntityManagerInterface $entityManager): Response
     {
-        // $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        // If the user is not authenticated, they will be redirected to the login page.
+        // This is a security measure to ensure that only authenticated users can edit a ticket.
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+        // Users and Editors have limited permission to update Category and Status.
+        // Backup Category and Status to prevent loss of data.
+        $originalCategory = $ticket->getCategory();
+        $originalStatus = $ticket->getStatus();
+
         $form = $this->createForm(EditTicketType::class, $ticket);
         $form->handleRequest($request);
+
+        // Status and Category are not editable by Users and Editors. Thus they are set to null in the form response.
+        if($ticket->getStatus() === null) {
+            // The status is null because user cannot set it (disabled in form), restore previous value
+            $ticket->setStatus($originalStatus);
+        }
+        if($ticket->getCategory() === null) {
+            // The category is null because user cannot set it (disabled in form), restore previous value
+            $ticket->setCategory($originalCategory);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -168,6 +188,7 @@ final class TicketController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'ticket_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(
         Ticket $ticket, 
         EntityManagerInterface $entityManager, 

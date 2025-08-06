@@ -11,6 +11,11 @@
 {% block logoimg %}{{ asset('images/logo.png') }}{% endblock %}
 
 {% block body %}
+    <p class="bottomButton">
+        <button class="button-22" role="button">
+            <a href="{{ path('app_ticket_create') }}">Nouveau ticket</a>
+        </button>    
+    </p>
     <h1 id="titre">Liste des tickets</h1>
 
     <div class="container">
@@ -46,14 +51,10 @@
             <p>Aucun ticket trouvé</p>
         {% endif %}
     </div>
-    <p class="bottomButton">
+    {# <p class="bottomButton">
         <button class="button-22" role="button">
             <a href="{{ path('app_home') }}">Accueil</a>
         </button>    
-    </p>
-    <p class="bottomButton">
-        <button class="button-22" role="button">
-            <a href="{{ path('app_ticket_create') }}">Nouveau ticket</a>
-        </button>    
-    </p>
+    </p> #}
+
 {% endblock %}
