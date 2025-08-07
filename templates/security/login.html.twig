@@ -53,8 +53,7 @@
 				{% endfor %}
 			</form>
 			{% if error %}
-                <div id="errorMsg">{{ error }}</div>
-				{# <div id="errorMsg">Erreur d'authentification</div> #}
+                <div id="errorMsg">{{ error.messageKey }}</div>
             {% endif %}
 		</div>
 
