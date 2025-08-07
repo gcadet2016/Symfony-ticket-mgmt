@@ -24,6 +24,9 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
+            # by default, the feature allows 5 login attempts per minute
+            # https://symfony.com/doc/current/security.html#limiting-login-attempts
+            login_throttling: null
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
