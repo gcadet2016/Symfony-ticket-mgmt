@@ -32,7 +32,8 @@ services:
         published: ${HTTP3_PORT:-443}
         protocol: udp
     depends_on:
-      - database  # indique à Docker Compose que le conteneur php dépend du conteneur database et que ce dernier doit être démarré en premier.
+      database:
+        condition: service_healthy
 
 # Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
 ###> symfony/mercure-bundle ###
@@ -48,6 +49,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-app}
     healthcheck:
       test: ["CMD", "pg_isready", "-d", "${POSTGRES_DB:-app}", "-U", "${POSTGRES_USER:-app}"]
+      interval: 10s
       timeout: 5s
       retries: 5
       start_period: 60s

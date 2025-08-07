@@ -35,7 +35,22 @@
     <script type="module">
         import { toggleFooter } from 'footerScript';
         document.getElementById('toaster').onclick = function() { toggleFooter(); };
+
+        // Scroll direction detection
+        let lastScrollY = window.scrollY;
+        const toaster = document.getElementById('toaster');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > lastScrollY) {
+                // Scrolling down
+                toaster.classList.add('hide-on-scroll');
+            } else {
+                // Scrolling up
+                toaster.classList.remove('hide-on-scroll');
+            }
+            lastScrollY = window.scrollY;
+        });
     </script>
 {% endblock %}
 
-    
+

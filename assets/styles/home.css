@@ -10,8 +10,16 @@
     padding: 2em;
     text-align: justify;
 }
-#ulist {
-    margin-left: 4em;
+th, td {
+    padding: 12px;
+    border: 1px solid black;
+    text-align: left;
+}
+th {
+    background-color: #beb0b0;
+}
+tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 /* --------- Pour les petits écrans --------- */
 @media screen and (max-width: 800px) {

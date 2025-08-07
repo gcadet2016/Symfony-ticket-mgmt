@@ -1,0 +1,60 @@
+{# filepath: /app/templates/app/listTickets.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/listTickets.css') }}"/>
+{% endblock %}
+
+{% block logoimg %}{{ asset('images/logo.png') }}{% endblock %}
+
+{% block body %}
+    <p class="bottomButton">
+        <button class="button-22" role="button">
+            <a href="{{ path('app_ticket_create') }}">Nouveau ticket</a>
+        </button>    
+    </p>
+    <h1 id="titre">Liste des tickets</h1>
+
+    <div class="container">
+        {% if tickets is not empty %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Création</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Owner</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                        <tr>
+                            <td>
+                                <a href="{{ path('app_ticket_edit', {id: ticket.id}) }}">{{ ticket.id }}</a>
+                            </td>
+                            <td>{{ ticket.getEmail }}</td>
+                            <td>{{ ticket.getCreationDate|date('d/m/Y H:i') }}</td>
+                            <td>{{ ticket.getDescription }}</td>
+                            <td>{{ ticket.Category.getName() }}</td>
+                            <td>{{ ticket.Status.getName() }}</td>
+                            <td>{{ ticket.Owner }}</td>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucun ticket trouvé</p>
+        {% endif %}
+    </div>
+    {# <p class="bottomButton">
+        <button class="button-22" role="button">
+            <a href="{{ path('app_home') }}">Accueil</a>
+        </button>    
+    </p> #}
+
+{% endblock %}

@@ -31,12 +31,9 @@ class LoginController extends AbstractController
 
     #[Route('/login', name: 'app_login')]
     public function login(
-        AuthenticationUtils $authenticationUtils, 
-        Request $request, 
-        EntityManagerInterface $entityManager
-    ): Response
+        AuthenticationUtils $authenticationUtils,
+        Request $request   ): Response
     {
-        $this->incPageviews($entityManager, 'security/authent.html');
         $requestUri = $request->request->get('target_path');
         if ($requestUri) {
             $this->logger->debug('target_path forwarded: ' . $requestUri);
@@ -50,7 +47,7 @@ class LoginController extends AbstractController
 
         // Note: authentication custom actions are implemented in listeners:
         // CheckVerifiedUserListener.php
-        return $this->render('security/authent.html.twig', [
+        return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
@@ -58,18 +55,21 @@ class LoginController extends AbstractController
 
 
     #[Route('/password-lost', name: 'app_password_lost')]
-    public function passwordLost(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
+    // public function passwordLost(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
+public function passwordLost(Request $request, EntityManagerInterface $entityManager): Response
     {
+        return $this->redirectToRoute('under_construction'); // Redirection vers une page de maintenance
+
         if ($request->isMethod('POST')) {
             $email = $request->request->get('email');
             $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
-    
+
             if ($user) {
                 // Générer un token de réinitialisation
                 $resetToken = bin2hex(random_bytes(32));
                 $user->setResetToken($resetToken);
                 $entityManager->flush();
-    
+
                 // Envoyer un email avec le lien de réinitialisation
                 $resetUrl = $this->generateUrl('app_password_reset', ['token' => $resetToken], UrlGeneratorInterface::ABSOLUTE_URL);
                 $emailMessage = (new Email())
@@ -77,18 +77,18 @@ class LoginController extends AbstractController
                     ->to($user->getEmail())
                     ->subject('Réinitialisation de votre mot de passe')
                     ->html("<p>Pour réinitialiser votre mot de passe, cliquez sur le lien suivant : <a href='$resetUrl'>$resetUrl</a></p>");
-    
+
                 $mailer->send($emailMessage);
-    
+
                 $this->addFlash('success', 'Un email de réinitialisation a été envoyé.');
             } else {
                 $this->addFlash('error', 'Aucun utilisateur trouvé avec cet email.');
             }
         }
-    
+
         return $this->render('security/password_lost.html.twig');
     }
- 
+
     #[Route('/password-reset/{token}', name: 'app_password_reset')]
     public function passwordReset(Request $request, string $token, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
@@ -112,18 +112,4 @@ class LoginController extends AbstractController
         return $this->render('security/password_reset.html.twig', ['token' => $token]);
     }
 
-    // Increment page view count for the given page name
-    public function incPageviews(EntityManagerInterface $em, string $pageName)
-    {
-        $pageView = $em->getRepository(PageView::class)->findOneBy(['page' => $pageName]);
-        if (!$pageView) {
-            $pageView = new PageView();
-            $pageView->setPage($pageName);
-            $pageView->setViews(1);
-            $em->persist($pageView);
-        } else {
-            $pageView->increment();
-        }
-        $em->flush();
-    }
 }

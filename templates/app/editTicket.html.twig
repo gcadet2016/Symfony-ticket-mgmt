@@ -1,0 +1,39 @@
+{# templates/app/editTicket.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition du ticket{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/editTicket.css') }}"/>
+{% endblock %}
+
+{% block logoimg %}{{ asset('images/logo.png') }}{% endblock %}
+
+{% block body %}
+    <div class="ticket_main_container">
+        <h1>Modification du ticket</h1>
+        {# <div class="ticket_main"> #}
+            {{ include('app/_editTicket_form.html.twig', {
+                form: form,
+                button_label: 'Enregistrer le ticket',
+                include_back_to_home_link: true,
+            }, with_context = false) }}
+        {#</div>#}
+        <aside id="sidebar"> 
+            <div class="section">
+                <a href="{{ path('app_tickets_list', {id: ticket.id}) }}" class="btn btn-lg btn-block btn-success">
+                    <twig:ux:icon name="tabler:eye"/> Retour liste des tickets
+                </a>
+            </div>
+            <div class="ticketDelete">
+                {# Ticket delete #}
+                <form method="post" action="{{ path('ticket_delete', {id: ticket.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce ticket ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete_ticket_' ~ ticket.id) }}">
+                    <button class="btn btn-danger" type="submit"><twig:ux:icon name="guidance:bin"/> Supprimer ce ticket ?</button>
+                </form>
+            </div>
+
+        </aside>
+    </div>
+{% endblock %}

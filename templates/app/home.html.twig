@@ -20,27 +20,53 @@
     <section>
         <article class="w_left">
             <p>
-                Portail de création et suivi des tickets de supports. 
+                Portail de création et suivi des tickets de support.<br>
+                Développé sous Docker Desktop.<br>
+                <a href="https://github.com/gcadet2016/Symfony-ticket-mgmt" target="_blank">Repository Github</a><br>
+                Instructions de mise en route dans le fichier README.md<br>
+                <a href="https://github.com/dunglas/symfony-docker" target="_blank">Source de l'image Docker utilisée.</a><br>
+                Elle implemente <a href="https://github.com/php/frankenphp/tree/main" target="_blank">FrankenPHP</a><br>
+            </p>
+            <br>
+            <p>
+                <b>Remarques</b>: pour des questions de sécurité l'authentification est obligatoire pour tous les rôles.<br>
+                Les utilisateurs ne peuvent accéder qu'à leurs tickets pour modification.<br>
+                Pour simplifier l'application, la vérification de l'email d'un nouvel utilisateur, n'a pas été implémentée.<br>
+                D'autres fonctionnalités relatives à la gestion des comptes n'ont pas été implémentées (perte et changement du mot de passe... )<br>
+                Symfony contient des <a href="https://symfony.com/doc/current/testing.html" target="_blank">fonctionnalités de test</a> non implémentées dans ce projet<br>
             </p>
         </article>
         <article class="w_right">
             <h2>
-                {{ 'homepage.objectifs'|trans|raw }}
+                Comptes de test
             </h2>
-            <p>
-                Ouvrez un ticket de support etc...
-            </p>
-            <br>
-            <p>
-                En cas d'urgence ou situation critique composez le 07 56 67 54 65
-                <ul id="ulist">
-                    <li>Expliquer le problème rencontré</li>
-                    <li>Préciser la criticité du problème</li>
-                    <li>Fréquence du défau ou de défaillance</li>
-                    <li>Avez-vous une solution temporaire de secours?</li> 
-                </ul>
-                Nos services traiteront votre demande dans les plus bref délais.
-            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>email</th>
+                        <th>Mot de passe</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>admin@agence.com</td>
+                        <td>admin</td>
+                        <td>Administrateur</td>
+                    </tr>
+                    <tr>
+                        <td>personel@agence.com</td>
+                        <td>perso</td>
+                        <td>Personnel de l'agence</td>
+                    </tr>
+                    <tr>
+                        <td>user1@agence.com</td>
+                        <td>user1</td>
+                        <td>Utilisateur</td>
+                    </tr>
+                </tbody>
+            </table>
+
         </article>
     </section>
 {% endblock %}

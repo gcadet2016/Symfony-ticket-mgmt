@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'editUser.htmlPageTitle'|trans|raw }}{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/userEdit.css') }}"/>
+{% endblock %}
+
+{% block logoimg %}{{ asset('images/logo.png') }}{% endblock %}
+
+{% block body %}
+    <div class="userEdit_main_container">
+        <h1 id="title">Modifier l'utilisateur</h1>
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-primary" type="submit">Mettre à jour</button>
+            <a href="{{ path('userAdmin_list') }}" class="btn-exit">Retour à la liste</a>
+        {{ form_end(form) }}
+    </div>
+    <div class="userDelete">
+        <form method="post" action="{{ path('userAdmin_delete', {id: user.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete_user_' ~ user.id) }}">
+            <button class="btn btn-danger" type="submit">Supprimer l'utilisateur</button>
+        </form>
+    </div>
+{% endblock %}
