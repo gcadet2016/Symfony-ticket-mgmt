@@ -1,0 +1,102 @@
+#mainBlockId {
+    margin: 2% 10%;
+    padding-bottom: 120px;
+}
+#title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+}
+
+.form-group {
+    /* width: 90%; */
+    color: black;
+    margin: 10px 0;
+    display: block;
+}
+.form-group label {
+    font-size: 1.25rem;
+}
+.form-control {
+    display: block;
+    width: 90%;
+    padding: 0.75rem 0.75rem;
+    border-radius: 5px;
+    border-width: 0.125rem;
+    border-color: rgb(222, 226, 230);
+    font-size: 1rem;
+    margin-top: 0.2rem;
+}
+.help-text {
+    font-size: 0.875rem;
+    color: rgb(73, 80, 87);
+}
+#user_edit_roles input[type="checkbox"] {
+    margin-right: 0.2rem;
+    margin-left: 1rem;
+}
+.btn {
+    appearance: none;
+    background-color: rgb(24, 188, 156);
+    border: 2px solid rgb(19, 151, 124);
+    border-radius: 15px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    align-items: center; /* Aligne horizontalement les éléments */
+    /* font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; */
+    font-size: 20px;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-height: 60px;
+    min-width: 0;
+    outline: none;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    /* width: 100px; */
+    will-change: transform;
+  }
+  
+  .btn:disabled {
+    pointer-events: none;
+  }
+  
+  .btn:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+  }
+  
+  .btn:active {
+    box-shadow: none;
+    transform: translateY(0);
+  }
+
+  .btn-exit {
+    display: inline-block;
+    font-size: 20px;
+    font-weight: 600;
+    padding-left: 2em;
+  }
+
+  .userDelete {
+    padding-top: 2em;
+  }
+  .btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}

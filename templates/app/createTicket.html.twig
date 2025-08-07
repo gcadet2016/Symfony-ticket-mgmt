@@ -1,6 +1,8 @@
-{# templates/utils/createTicket.html.twig #}
+{# templates/app/createTicket.html.twig #}
 
 {% extends "base.html.twig" %}
+
+{% block title %}Création d'un ticket{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('styles/createTicket.css') }}"/>
@@ -9,5 +11,22 @@
 {% block logoimg %}{{ asset('images/logo.png') }}{% endblock %}
 
 {% block body %}
-    <h1>Création d'un nouveau ticket</h1>
+    <h1 id='titre'>Création d'un nouveau ticket</h1>
+    
+    <div class="container">
+        {{ form_errors(CreateTicketForm) }}
+
+        {{ form_start(CreateTicketForm) }}
+            {{ form_row(CreateTicketForm.email) }}
+            {{ form_row(CreateTicketForm.creationDate) }}
+            {{ form_row(CreateTicketForm.description) }}
+            {{ form_row(CreateTicketForm.category) }}
+            {{ form_row(CreateTicketForm.owner) }}
+            {{ form_row(CreateTicketForm.status) }}
+            {{ form_row(CreateTicketForm.closeDate) }}
+            <div class="submitBtn">
+                <button type="submit" class="btn-submit">Création</button>
+            </div>
+        {{ form_end(CreateTicketForm) }}
+    </div>
 {% endblock %}

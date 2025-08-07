@@ -63,7 +63,7 @@ final class UserAdminController extends AbstractController
             return $this->redirectToRoute('userAdmin_list'); // Redirige vers la liste des utilisateurs
         }
 
-        return $this->render('admin/userEdit_form.html.twig', [
+        return $this->render('security/userEdit_form.html.twig', [
             'form' => $form->createView(),
             'user' => $user,
         ]);

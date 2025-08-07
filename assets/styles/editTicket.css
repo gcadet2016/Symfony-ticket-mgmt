@@ -1,0 +1,121 @@
+.ticket_main_container {
+    display: grid;
+    grid-template-columns: 1fr 200px; 
+    grid-template-rows: auto;
+    margin: 10px;
+    color: black;
+}
+.ticket_main_container h1 {
+    grid-area: 1 / 1 / 2 / 2;
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+}
+.ticket_main{
+    grid-area: 2 / 1 / 3 / 2;
+    margin: 0 5px;
+    max-width: 80vw; /* Limite la largeur à 80% de la largeur de l'écran */
+    text-align: justify;
+    text-justify: inter-word;
+}
+.ticket_main_container #sidebar {
+    grid-column: 2;
+    grid-row: 1 / 4;
+    padding: 0 12px
+}
+.ticket_main_container form .btn {
+
+}
+#edit_ticket div {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+}
+#edit_ticket div label { 
+    grid-column: 1;
+    padding: 10px;
+    margin: 5px 0;
+}
+#edit_ticket div input, #edit_ticket div textarea, #edit_ticket div select {
+    grid-column: 2;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+#edit_ticket div input[type="submit"] {
+    background-color: #4CAF50; /* Vert */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+#edit_ticket div input[type="submit"]:hover {
+    background-color: #45a049; /* Vert foncé */
+}
+#btn-submit {
+    display: flex;
+    justify-content: flex-end; /* Aligne le bouton à droite */
+    margin-top: 20px; /* Ajoute un espace au-dessus du bouton */
+}
+
+.btn {
+  appearance: none;
+  background-color: #56B473;
+  border: 2px solid rgb(19, 151, 124);
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Aligne horizontalement les éléments */
+  /* font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"; */
+  font-size: 20px;
+  font-weight: 600;
+  line-height: normal;
+  margin-bottom: 15px;
+  min-height: 60px;
+  min-width: 0;
+  outline: none;
+  padding: 16px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  /* width: 100px; */
+  will-change: transform;
+}
+
+.btn:disabled {
+  pointer-events: none;
+}
+
+.btn:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+.btn svg {
+    margin-right: 10px;
+}
+.ticketDelete {
+    padding-top: 2em;
+}
+.btn-danger {
+    background-color: #E52421;
+    color: white;
+    border: 2px solid #C82333;
+    padding: 10px 15px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+.btn-help {
+    background-color: #2E509F;
+}

@@ -1,0 +1,65 @@
+#titre {
+    text-align: center;
+  }
+.container {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    /* height: 100vh; */
+}
+table {
+    width: 80%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 12px;
+    border: 1px solid black;
+    text-align: left;
+}
+th {
+    background-color: #beb0b0;
+}
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.bottomButton {
+  padding-top: 20px;
+  padding-left: 10%;
+}
+.button-22 {
+  align-items: center;
+  appearance: button;
+  background-color: #0276FF;
+  border-radius: 8px;
+  border-style: none;
+  box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  flex-shrink: 0;
+  font-family: "RM Neue",sans-serif;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  padding: 10px 21px;
+  text-align: center;
+  text-transform: none;
+  transition: color .13s ease-in-out,background .13s ease-in-out,opacity .13s ease-in-out,box-shadow .13s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-22:active {
+  background-color: #006AE8;
+}
+
+.button-22:hover {
+  background-color: #1C84FF;
+}
+.button-22 a {
+    color: white;
+    text-decoration: none;
+}

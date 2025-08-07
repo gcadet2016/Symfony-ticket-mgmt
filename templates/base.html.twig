@@ -77,10 +77,8 @@
 
                 <nav class="navBar">
                     <ul class="menu hiddensm" id="dropdown-menu">
-                        {#<li class="menuItem"><a href="{{ path('app_sinspirer') }}">{{ 'menu.sinspirer' |trans }}</a></li>
-                        <li class="menuItem"><a href="{{ path('app_resources') }}">Ressources</a></li>
-                        <li class="menuItem"><a href="{{ path('app_contribute') }}">{{ 'menu.contribute' |trans }}</a></li>#}
                         <li class="menuItem"><a href="{{ path('app_home') }}">Accueil</a></li>
+                        <li class="menuItem"><a href="{{ path('app_tickets_list') }}">Tickets</a></li>
                         <li class="menuItem"><a href="{{ path('under_construction') }}">Contact</a></li>
                         {% if app.user and is_granted('ROLE_ADMIN') %}
                             <li class="menuItem"><a href="{{ path('userAdmin_list') }}">Admin</a></li>
