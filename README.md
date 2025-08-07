@@ -37,3 +37,5 @@ Connexion:
 | DB name | app |
 | User | app |
 | Password | !ChangeMe! |
+
+__Attention:__ cette configuration doit être modifié avant tout déploiement.
