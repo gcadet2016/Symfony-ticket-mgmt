@@ -35,10 +35,10 @@ services:
       - database  # indique à Docker Compose que le conteneur php dépend du conteneur database et que ce dernier doit être démarré en premier.
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost"]
-      interval: 10s
-      timeout: 5s
+      interval: 30s
+      timeout: 15s
       retries: 5
-      start_period: 60s
+      start_period: 120s
 
 # Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
 ###> symfony/mercure-bundle ###
