@@ -11,7 +11,7 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $category_id = null;
+    private ?int $category_id = null;       // Automatically generated ID for the category (auto increment)
 
     #[ORM\Column(length: 32)]
     private ?string $name = null;

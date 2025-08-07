@@ -16,7 +16,7 @@ docker compose build --no-cache
 ```
 docker compose up --wait
 ```
-## SUppression des containers
+## Suppression des containers
 ```
 docker compose down --remove-orphans
 ```

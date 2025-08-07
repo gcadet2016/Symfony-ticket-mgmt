@@ -9,66 +9,78 @@ use Doctrine\Persistence\ObjectManager;
 use App\Entity\Category;
 use App\Entity\Status;
 use App\Entity\User;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $hasher;
+
+    public function __construct(UserPasswordHasherInterface $hasher)
+    {
+        $this->hasher = $hasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
         $Category = new Category();
-        $Category->setId(1);
         $Category->setName('Incident');
         $manager->persist($Category);
 
         $Category = new Category();
-        $Category->setId(2);
         $Category->setName('Panne');
         $manager->persist($Category);
 
         $Category = new Category();
-        $Category->setId(3);
         $Category->setName('Evolution');
         $manager->persist($Category);
 
         $Category = new Category();
-        $Category->setId(4);
         $Category->setName('Anomalie');
         $manager->persist($Category);
 
         $Category = new Category();
-        $Category->setId(5);
         $Category->setName('Information');
         $manager->persist($Category);
 
         $Status = new Status();
-        $Status->setId(1);
         $Status->setName('Nouveau');
         $manager->persist($Status);
 
         $Status = new Status();
-        $Status->setId(1);
         $Status->setName('Ouvert');
         $manager->persist($Status);
 
         $Status = new Status();
-        $Status->setId(1);
-        $Status->setName('Résolu');
+         $Status->setName('Résolu');
         $manager->persist($Status);
 
         $Status = new Status();
-        $Status->setId(2);
         $Status->setName('Fermé');
         $manager->persist($Status);
 
         $User = new User();
         $User->setEmail('admin@agence.com');
-        $User->setPassword('admin');
+        $User->setPassword($this->hasher->hashPassword($User, 'admin'));
         $User->setRoles(['ROLE_ADMIN']);
         $User->setUsername('admin');
         $User->setIsVerified(true);
         $manager->persist($User);
 
+        $User = new User();
+        $User->setEmail('personnel@agence.com');
+        $User->setPassword($this->hasher->hashPassword($User, 'perso'));
+        $User->setRoles(['ROLE_EDITOR']);
+        $User->setUsername('Personnel Agence');
+        $User->setIsVerified(true);
+        $manager->persist($User);
+
+        $User = new User();
+        $User->setEmail('user1@agence.com');
+        $User->setPassword($this->hasher->hashPassword($User, 'user1'));
+        $User->setRoles(['ROLE_USER']);
+        $User->setUsername('User1');
+        $User->setIsVerified(true);
+        $manager->persist($User);       
 
         $manager->flush();
     }
